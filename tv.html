@@ -1,0 +1,39 @@
+<html>
+<head>
+    <title>TV Streamer</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.tv.min.js"></script>
+    <script type="text/javascript">
+        var theChannels = [
+            {'name':'RCTI','url':'http://cdn.mivo.tv:1935/mivotvjkt/rcti2/manifest.f4m','mobile':'http://edge.okeinfo.net:1935/live/mncoke1_512.stream/playlist.m3u8'},
+            {'name':'SCTV','url':'http://cdn.mivo.tv:1935/mivotvjkt/sctv2/manifest.f4m','mobile':'http://cdn.mivo.tv:1935/mivotvjkt/sctv2/playlist.m3u8'},
+            {'name':'TransTV','url':'rtmp://203.190.243.41:1935/live/_definst_/transtv.sdp','mobile':'http://cdn.mivo.tv:1935/mivotvjkt/transtv2/playlist.m3u8'},
+            {'name':'Trans 7','url':'rtmp://203.190.243.41:1935/live/_definst_/trans7@5.sdp','mobile':'http://cdn.mivo.tv:1935/mivotvjkt/trans72/playlist.m3u8'},
+            {'name':'Indosiar','url':'http://cdn.mivo.tv:1935/mivotvjkt/indosiar2/manifest.f4m','mobile':'http://cdn.mivo.tv:1935/mivotvjkt/indosiar2/playlist.m3u8'},
+            {'name':'TV One','url':'http://cdn.mivo.tv:1935/mivotvjkt/tvone2/manifest.f4m','mobile':'http://cdn.mivo.tv:1935/mivotvjkt/tvone2/playlist.m3u8'},
+            {'name':'DaaiTV','url':'http://cdn.mivo.tv:1935/mivotvjkt/daaitv2/manifest.f4m','mobile':'http://cdn.mivo.tv:1935/mivotvjkt/daaitv2/playlist.m3u8'},
+            {'name':'MetroTV','url':'http://cdn.mivo.tv:1935/mivotvjkt/metrotv2/manifest.f4m','mobile':'http://cdn.mivo.tv:1935/mivotvjkt/metrotv2/playlist.m3u8'},
+            {'name':'ANTV','url':'rtmp://202.129.216.27/live','mobile':'http://cdn.mivo.tv:1935/mivotvjkt/antv2/playlist.m3u8'},
+            {'name':'LunarTV','url':'http://cdn.mivo.tv:1935/mivotvjkt/lunartv2/manifest.f4m','mobile':'http://cdn.mivo.tv:1935/mivotvjkt/lunartv2/playlist.m3u8'},
+            {'name':'Spacetoon','url':'http://cdn.mivo.tv:1935/mivotvjkt/spacetoon2/manifest.f4m','mobile':'http://cdn.mivo.tv:1935/mivotvjkt/spacetoon2/playlist.m3u8'},
+            {'name':'GlobalTV','url':'http://cdn.mivo.tv:1935/mivotvjkt/globaltv2/manifest.f4m','mobile':'http://cdn.mivo.tv:1935/mivotvjkt/globaltv2/playlist.m3u8'},
+            {'name':'MNC TV','url':'http://cdn.mivo.tv/mivotvjkt/mnctv2/manifest.f4m','mobile':'http://cdn.mivo.tv:1935/mivotvjkt/mnctv2/playlist.m3u8'},
+            {'name':'TVRI Nasional','url':'rtmp://118.97.50.102/live/stream1.sdp','mobile':''},
+            {'name':'TVRI Jakarta','url':'rtmp://118.97.50.102/live/stream2.sdp','mobile':''},
+            {'name':'TVRI Budaya','url':'rtmp://118.97.50.102/live/stream3.sdp','mobile':''},
+            {'name':'TVRI Olahraga','url':'rtmp://118.97.50.102/live/stream4.sdp','mobile':''},
+            {'name':'Binus TV','url':'http://202.58.181.205:1935/binustv/binustv.flv','mobile':''},
+            {'name':'B Channel','url':'rtmp://118.97.183.198/live/_definst_/bchannel','mobile':''},
+            {'name':'TV Edukasi','url':'rtmp://118.98.223.91/live/live','mobile':''},
+            {'name':'Kompas TV','url':'rtmp://202.137.11.52/jakarta/offair.sdp','mobile':''}
+        ];
+        $(document).ready(function() {
+            "use strict";
+            $('body').tv( { channels : theChannels });
+        });
+    </script>
+    <link rel="stylesheet" href="assets/css/tv.css" rel="stylesheet" media="screen" />
+</head>
+<body>
+</body>
+</html>
