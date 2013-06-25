@@ -55,3 +55,8 @@ body {
     padding: 10px 15px;
     margin: 10px 10px;
 }
+#tv_pip {
+    z-index: 10;
+    padding: 5px 5px;
+    margin: 10px 10px;
+}
