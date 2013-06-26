@@ -162,9 +162,9 @@
             }
             else {
                 var pipPosition = tvContainer.pip.position();
-                tvContainer.guide.css({ 'top': '0', 'left': '0' });
-                tvContainer.guide.html(tvSettings.channels[channel].name).fadeIn(2000).fadeOut(4000);
                 tvContainer.guide.css({ 'top': pipPosition.top, 'left': pipPosition.left });
+                tvContainer.guide.html(tvSettings.channels[channel].name).fadeIn(2000).fadeOut(4000);
+                tvContainer.guide.css({ 'top': '0', 'left': '0' });
             }
         },
         loadChannel: function(guide) {
