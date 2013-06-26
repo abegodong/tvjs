@@ -4,7 +4,7 @@
  * Date: 6/21/13
  * Time: 4:55 AM
  */
-/* global $, jQuery */
+/* global jQuery */
 ;(function( $ ) {
     "use strict";
     var tvSettings,
@@ -22,7 +22,7 @@
                 42 : '8',
                 40 : '9',
                 41 : '0'
-            }
+            };
             tvContainer.root.data("channel", "");
             tvContainer.root.data("switchTo", "");
             tvContainer.root.data("pipChannel", "");
@@ -154,8 +154,18 @@
             out += '<p>Press "H" or "ESC" to close this help menu.<br />Press "R" to reload channel</p>';
             return out;
         },
-        loadGuide: function(channel) {
-            tvContainer.guide.html(tvSettings.channels[channel].name).fadeIn(2000).fadeOut(4000);
+        loadGuide: function(channel, pip) {
+            if (channel == "") return;
+            pip = typeof pip !== 'undefined' ? pip : false;
+            if (pip === false) {
+                tvContainer.guide.html(tvSettings.channels[channel].name).fadeIn(2000).fadeOut(4000);
+            }
+            else {
+                var pipPosition = tvContainer.pip.position();
+                tvContainer.guide.css({ 'top': '0', 'left': '0' });
+                tvContainer.guide.html(tvSettings.channels[channel].name).fadeIn(2000).fadeOut(4000);
+                tvContainer.guide.css({ 'top': pipPosition.top, 'left': pipPosition.left });
+            }
         },
         loadChannel: function(guide) {
             var switchTo = tvContainer.root.data("switchTo");
@@ -187,15 +197,23 @@
         loadPiP: function() {
             var pipSwitchTo = tvContainer.root.data("pipSwitchTo");
             if( /webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
-                //Currently there are no support for PiP for mobile device.
+                tvContainer.pip.html('<div class="tv_error">Feature not available in mobile devices.</div>');
             }
             else {
                 if (tvContainer.pip.is(":visible") && pipSwitchTo !== "") {
-                    tvContainer.pip.html('<embed wmode="transparent" width="300" height="225" allowfullscreen="false" allowscriptaccess="always" bgcolor="#000000" flashvars="src='+tvSettings.channels[pipSwitchTo].url+'&amp;autoHideControlBar=true&amp;streamType=live&amp;autoPlay=true&amp;scaleMode=stretch&amp;muted=true" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash" quality="medium" src="http://fpdownload.adobe.com/strobe/FlashMediaPlayback_101.swf?rnd=4/[[DYNAMIC]]/1" type="application/x-shockwave-flash">');
-                    tvContainer.root.data("pipChannel", pipSwitchTo);
-                    tvContainer.root.data("pipSwitchTo", "");
+                    if (tvSettings.channels[pipSwitchTo] === undefined) {
+                        tvContainer.pip.html('Invalid Channel! Please enter valid channel number.');
+                        tvContainer.root.data("pipChannel", "");
+                        tvContainer.root.data("pipSwitchTo", "");
+                    }
+                    else {
+                        tvContainer.pip.html('<embed wmode="transparent" width="300" height="225" allowfullscreen="false" allowscriptaccess="always" bgcolor="#000000" flashvars="src='+tvSettings.channels[pipSwitchTo].url+'&amp;autoHideControlBar=true&amp;streamType=live&amp;autoPlay=true&amp;scaleMode=stretch&amp;muted=true" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash" quality="medium" src="http://fpdownload.adobe.com/strobe/FlashMediaPlayback_101.swf?rnd=4/[[DYNAMIC]]/1" type="application/x-shockwave-flash">');
+                        tvContainer.root.data("pipChannel", pipSwitchTo);
+                        tvContainer.root.data("pipSwitchTo", "");
+                        tvMethods.loadGuide(pipSwitchTo, true);
+                    }
                 }
-                else {
+                else if (tvContainer.root.data("pipChannel") === "") {
                     tvContainer.pip.html('Please select a PiP Channel.');
                 }
             }
@@ -208,27 +226,19 @@
             }
             if (moveTo === 1) {
                 tvContainer.pip.css({ 'top': '0', 'left': '0', 'right': 'auto', 'bottom': 'auto', 'display': 'block' });
-                if (tvContainer.pip.is(":visible") === false) {
-                    tvMethods.loadPiP();
-                }
+                tvMethods.loadPiP();
             }
             else if (moveTo === 2 ) {
                 tvContainer.pip.css({ 'top': '0', 'left': 'auto', 'right': '0', 'bottom': 'auto', 'display': 'block' });
-                if (tvContainer.pip.is(":visible") === false) {
-                    tvMethods.loadPiP();
-                }
+                tvMethods.loadPiP();
             }
             else if (moveTo === 3 ) {
                 tvContainer.pip.css({ 'top': 'auto', 'left': 'auto', 'right': '0', 'bottom': '0', 'display': 'block' });
-                if (tvContainer.pip.is(":visible") === false) {
-                    tvMethods.loadPiP();
-                }
+                tvMethods.loadPiP();
             }
             else if (moveTo === 4 ) {
                 tvContainer.pip.css({ 'top': 'auto', 'left': '0', 'right': 'auto', 'bottom': '0', 'display': 'block' });
-                if (tvContainer.pip.is(":visible") === false) {
-                    tvMethods.loadPiP();
-                }
+                tvMethods.loadPiP();
             }
             tvContainer.root.data("pipLocation", moveTo);
         },
@@ -242,6 +252,8 @@
                 tvMethods.loadIntro();
             }
             else if (tvSettings.channels[hash] === undefined) {
+                tvContainer.root.data("channel", "");
+                tvContainer.root.data("switchTo", "");
                 tvMethods.loadError(1);
             }
             else {
