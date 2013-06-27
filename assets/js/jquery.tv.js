@@ -146,8 +146,10 @@
             var out="<p>To start streaming: press your number key corresponding to the channel number below.</p>";
             out += "<DL>";
             $.each(tvSettings.channels, function(key, value) {
-                out += "<DT>"+key+"</DT>";
-                out += "<DD>"+value.name+"</DD>";
+                if (key !== 0) {
+                    out += "<DT>"+key+"</DT>";
+                    out += "<DD>"+value.name+"</DD>";
+                }
             });
             out += "</DL>";
             out += '<p>Press "H" or "ESC" to close this help menu.<br />Press "R" to reload channel</p>';
@@ -200,7 +202,7 @@
             }
             else {
                 if (tvContainer.pip.is(":visible") && pipSwitchTo !== "") {
-                    if (tvSettings.channels[pipSwitchTo] === undefined) {
+                    if (tvSettings.channels[pipSwitchTo] === undefined || tvSettings.channels[pipSwitchTo] === 0) {
                         tvContainer.pip.html('Invalid Channel! Please enter valid channel number.');
                         tvContainer.root.data("pipChannel", "");
                         tvContainer.root.data("pipSwitchTo", "");
@@ -243,7 +245,7 @@
         },
         handleHashChange: function() {
             var hash = window.location.hash.substring(1);
-            if (hash === 'null') {
+            if (hash === 'null' || hash === 0) {
                 window.location.hash = "";
                 hash = '';
             }
