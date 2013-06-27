@@ -1,0 +1,36 @@
+{
+  "name": "tv",
+  "version": "1.0.0",
+  "description": "jQuery plugin for creating a full screen TV functionality in browsers using internet TV stream",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abegodong/tvjs.git"
+  },
+  "keywords": [
+    "tv",
+    "streaming",
+    "plugin",
+    "jquery",
+    "television",
+    "stream",
+    "strobe"
+  ],
+  "author": "Abraham Godong",
+  "license": "MIT",
+  "gitHead": "c9959f864f89db1c6605bc6f237915c6c5715ef5",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/abegodong/tvjs/issues"
+  },
+  "dependencies": {
+    "grunt-contrib-requirejs": "~0.4.1",
+    "grunt-contrib-watch": "~0.4.4",
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-jasmine": "~0.5.1",
+    "grunt-contrib-uglify": "~0.2.2"
+  }
+}

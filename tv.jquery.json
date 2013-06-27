@@ -1,0 +1,29 @@
+{
+    "name": "tv",
+    "title": "TVJS",
+    "description": "jQuery plugin for creating a full screen TV functionality in browsers using internet TV stream",
+    "version": "1.0",
+    "homepage": "https://github.com/abegodong/tvjs",
+    "author": {
+        "name": "Abraham Godong",
+        "email": "jetlag@mask.my.id",
+        "url": "http://github.com/abegodong"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/abegodong/tvjs.git"
+    },
+    "bugs": {
+        "url": "https://github.com/abegodong/tvjs/issues"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/abegodong/tvjs/blob/master/MIT-LICENSE.txt"
+        }
+    ],
+    "dependencies": {
+        "jquery": ">=1.4.3"
+    },
+    "keywords": ["tv", "streaming", "plugin", "jquery", "television", "stream", "strobe"]
+}
