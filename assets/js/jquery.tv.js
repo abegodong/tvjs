@@ -29,15 +29,14 @@
             tvContainer.root.data("pipSwitchTo", "");
             tvContainer.root.data("pipLocation", 0);
             tvSettings.channels = [ { } ].concat(tvSettings.channels);
-            tvContainer.content =
-                tvContainer = $.extend(
-                    {
-                        'content' : $('<div />').attr('id',  "tv_content").css( { "width" : "100%", "height" : "100%" } ).appendTo(tvContainer.root),
-                        'help' : $('<div />').attr('id',  "tv_help").addClass('tv_help tv_wrap').appendTo(tvContainer.root),
-                        'guide' : $('<div />').attr('id',  "tv_guide").addClass('tv_wrap').appendTo(tvContainer.root),
-                        'pip' : $('<div />').attr('id', 'tv_pip').addClass('tv_wrap').appendTo(tvContainer.root)
-                    }, tvContainer
-                );
+            tvContainer = $.extend(
+                {
+                    content : $('<div />').attr('id',  "tv_content").css( { "width" : "100%", "height" : "100%" } ).appendTo(tvContainer.root),
+                    help : $('<div />').attr('id',  "tv_help").addClass('tv_help tv_wrap').appendTo(tvContainer.root),
+                    guide : $('<div />').attr('id',  "tv_guide").addClass('tv_wrap').appendTo(tvContainer.root),
+                    pip : $('<div />').attr('id', 'tv_pip').addClass('tv_wrap').appendTo(tvContainer.root)
+                }, tvContainer
+            );
             tvContainer.help.html(tvMethods.loadHelp());
             $(window).on('hashchange', function() {
                 tvMethods.handleHashChange();
@@ -59,7 +58,7 @@
                     }, 600));
                 }
                 //Handle PiP keypress!
-                else if (keypressed !== undefined && undefined !== pipChannels[keypressed]) {
+                else if (keypressed !== undefined && undefined !== pipChannels[keypressed] && tvSettings.allowPiP === true) {
                     clearTimeout($.data(this, 'pipTimer'));
                     var pipSwitchTo = tvContainer.root.data("pipSwitchTo");
                     if (pipChannels[keypressed] > 0 || pipSwitchTo !== '') {
@@ -72,7 +71,7 @@
                     }, 600));
                 }
                 //Hide or Show PiP!
-                else if (keypressed === 80 || keypressed === 112) {
+                else if (tvSettings.allowPiP === true && (keypressed === 80 || keypressed === 112)) {
                     tvMethods.movePiP();
                 } //Picture-in-picture (P)
                 else if (keypressed === 72 || keypressed === 104) {
@@ -81,16 +80,16 @@
                 else if (keypressed === 82 || keypressed === 114) {
                     tvContainer.root.data("switchTo", tvContainer.root.data("channel"));
                     tvMethods.loadChannel(true);
-                } //Reload (R)
+                } //Main Channel Reload (R)
                 else if (keypressed === 67 || keypressed === 99) {
                     tvMethods.loadGuide(tvContainer.root.data("channel"));
                 } //Show current Channel (C)
-                else if (keypressed === 83 || keypressed === 115) {
+                else if (tvSettings.allowPiP === true && (keypressed === 83 || keypressed === 115)) {
                     tvContainer.root.data("switchTo", tvContainer.root.data("pipChannel"));
                     tvContainer.root.data("pipSwitchTo", tvContainer.root.data("channel"));
                     window.location.hash = tvContainer.root.data("switchTo");
                     tvMethods.loadPiP();
-                } //PiP switch
+                } //PiP switch (S)
             });
             $(document).keyup(function(e) {
                 //if (e.keyCode == 13) { $('.save').click(); }     // enter
@@ -155,16 +154,16 @@
             return out;
         },
         loadGuide: function(channel, pip) {
-            if (channel == "") return;
+            if (channel === "") { return; }
             pip = typeof pip !== 'undefined' ? pip : false;
             if (pip === false) {
+                tvContainer.guide.css({ 'top': '0', 'left': '0' });
                 tvContainer.guide.html(tvSettings.channels[channel].name).fadeIn(2000).fadeOut(4000);
             }
             else {
                 var pipPosition = tvContainer.pip.position();
                 tvContainer.guide.css({ 'top': pipPosition.top, 'left': pipPosition.left });
                 tvContainer.guide.html(tvSettings.channels[channel].name).fadeIn(2000).fadeOut(4000);
-                tvContainer.guide.css({ 'top': '0', 'left': '0' });
             }
         },
         loadChannel: function(guide) {
@@ -300,7 +299,8 @@
             channels : [{ }],
             defaultChannel : false,
             autoPlay: true,
-            useTitle: true
+            useTitle: true,
+            allowPiP: true
         }, options);
         //Add Container
         $(this).addClass("tvContainer");
